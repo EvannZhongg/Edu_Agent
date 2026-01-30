@@ -1,0 +1,40 @@
+version: "3.8"
+
+services:
+  gateway:
+    build: ./services/gateway
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./data:/app/data
+      - ./config:/app/config
+    environment:
+      - REDIS_URL=redis://redis:6379/0
+      - CONFIG_PATH=/app/config/config.yaml
+    depends_on:
+      - redis
+
+  parser_worker:
+    build: ./services/parser
+    volumes:
+      - ./data:/app/data
+      - ./config:/app/config
+    environment:
+      - REDIS_URL=redis://redis:6379/0
+      - CONFIG_PATH=/app/config/config.yaml
+    depends_on:
+      - redis
+
+  analyzer_worker:
+    build: ./services/analyzer
+    volumes:
+      - ./data:/app/data
+      - ./config:/app/config
+    environment:
+      - REDIS_URL=redis://redis:6379/0
+      - CONFIG_PATH=/app/config/config.yaml
+    depends_on:
+      - redis
+
+  redis:
+    image: redis:alpine

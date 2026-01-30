@@ -1,0 +1,27 @@
+请分析图片中的目录结构，提取章节信息。对于每一项，除了提取 title 和 level 外，请额外判断该项的类型 type：
+- knowledge：包含具体知识点讲解的正文章节（如“8.1 平方根”）
+- meta：对章节的总结、回顾、复习题（如“小结”“复习题”“全章测试”）
+- expansion：拓展阅读、数学活动、思考题（如“阅读与思考”“数学活动”）
+
+重要规则：
+1) 对于“小结/复习题/全章测试”等内容，通常属于一级章节的附属，请将其 level 设为与标准小节相同（Level 2），严禁将其设为上一个小节的子节点（Level 3）。
+2) 仅根据图片内容提取，禁止编造。
+
+示例输出（仅示例格式）：
+[
+  { "title": "第八章 实数", "level": 1, "type": "knowledge" },
+  { "title": "8.1 平方根", "level": 2, "type": "knowledge" },
+  { "title": "阅读与思考 为什么√2不是有理数", "level": 3, "type": "expansion" },
+  { "title": "小结", "level": 2, "type": "meta" }
+]
+
+返回 JSON 格式：
+{
+  "has_toc": true/false,
+  "items": [
+    { "title": "...", "level": 1, "type": "knowledge|meta|expansion" }
+  ]
+}
+
+如果不是目录页，返回：
+{ "has_toc": false, "items": [] }

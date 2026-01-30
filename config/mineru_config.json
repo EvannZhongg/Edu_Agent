@@ -1,0 +1,6 @@
+{
+  "device": "cuda",
+  "output_format": "json",
+  "language": "auto",
+  "enable_ocr": true
+}

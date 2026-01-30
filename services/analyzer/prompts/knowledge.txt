@@ -1,0 +1,11 @@
+你是教辅解析专家。
+章节标题与内容如下，请返回 JSON：
+{
+  "summary": "一句话总结",
+  "points": [
+    {"concept": "知识点名", "explanation": "解释", "tags": ["高频","难点"]}
+  ],
+  "formulas": ["LaTeX公式1"],
+  "definitions": ["定义1"],
+  "mindmap": "Markdown 思维导图"
+}

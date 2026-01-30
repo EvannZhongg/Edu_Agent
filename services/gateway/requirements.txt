@@ -1,0 +1,11 @@
+fastapi>=0.110
+uvicorn>=0.27
+pydantic>=2.6
+pyyaml>=6.0
+sqlalchemy>=2.0
+lancedb>=0.8
+celery>=5.3
+redis>=5.0
+python-multipart>=0.0.9
+requests>=2.32
+python-dotenv>=1.0.1

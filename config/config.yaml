@@ -1,0 +1,92 @@
+storage:
+  base_path: "./data/shared"
+  lancedb_path: "./data/lancedb"
+  sqlite_path: "./data/sqlite/app.db"
+
+gateway:
+  host: "0.0.0.0"
+  port: 8000
+  cors_origins:
+    - "http://localhost:3000"
+
+models:
+  llm:
+    provider: "openai"
+    base_url: "https://api.deepseek.com/v1"
+    api_key: "${ENV_LLM_KEY}"
+    model_name: "deepseek-chat"
+    context_window: 32000
+    request_timeout_s: 120
+    max_retries: 3
+    retry_backoff_s: 5
+    max_chars: 3000
+  vlm:
+    provider: "openai"
+    base_url: "https://dashscope.aliyuncs.com/compatible-mode/v1"
+    api_key: "${ENV_VLM_KEY}"
+    model_name: "qwen3-vl-plus"
+  embedding:
+    provider: "openai"
+    base_url: "https://dashscope.aliyuncs.com/compatible-mode/v1"
+    api_key: "${ENV_EMBED_KEY}"
+    model_name: "text-embedding-v4"
+    dimension: 1024
+    max_batch_size: 10
+    max_chars: 1000
+
+mineru:
+  mode: "api" # api | cli
+  api_base_url: "http://localhost:8002"
+  api_endpoint: "/file_parse"
+  api_timeout_s: 7200
+  api_connect_timeout_s: 30
+  api_retries: 3
+  api_download_output: true
+  api_response_zip: true
+  api_params:
+    backend: "pipeline"
+    parse_method: "auto"
+    return_middle_json: true
+    return_images: true
+    return_md: true
+  install_path: "F:/Model/mineru"
+  cli_path: "F:/Model/mineru/.venv/Scripts/magic-pdf.exe"
+  config_path: "./config/mineru_config.json"
+  output_subdir: "mineru_output"
+  command_template: "{cli} --input {input} --output {output} --config {config}"
+
+pipeline:
+  auto_analyze: true
+  auto_workbook_bind: false
+  use_llm_segmentation: true
+  use_llm_binding: true
+  llm_concurrency: 20
+
+toc:
+  enable: true
+  max_pages: 20
+  use_vlm: true
+  use_text_fallback: true
+  align_mode: "patcher" # simple | llm | patcher
+  min_similarity: 0.6
+  scan_k_pages: 5
+  extend_max_pages: 3
+  pdf_dpi: 150
+  poppler_path: "./poppler/Library/bin"
+
+rag:
+  enable: true
+  chunk_size: 800
+  chunk_overlap: 100
+  top_k: 6
+
+prompts:
+  knowledge: "./services/analyzer/prompts/knowledge.txt"
+  knowledge_expansion: "./services/analyzer/prompts/knowledge_expansion.txt"
+  knowledge_meta: "./services/analyzer/prompts/knowledge_meta.txt"
+  toc_text: "./services/analyzer/prompts/toc_text.txt"
+  toc_images: "./services/analyzer/prompts/toc_images.txt"
+  toc_align: "./services/analyzer/prompts/toc_align.txt"
+  question_segment: "./services/analyzer/prompts/question_segment.txt"
+  question_bind: "./services/analyzer/prompts/question_bind.txt"
+  rag_answer: "./services/analyzer/prompts/rag_answer.txt"
